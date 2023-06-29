@@ -2,18 +2,29 @@ const { Schema, model } = require("mongoose");
 
 const venueSchema = new Schema(
   {
-    image: String,
-    name: String,
-    location: String,   // geo coordinates?
-    address: { 
-        street: String,
-        number: Number,
-        zip: Number,
-        city: String,
-        country: String
+    image: {
+      type: String,
+      required: true,
     },
-    description: String,  // or text field?
-    website: String
+    name: {
+      type: String,
+      required: true,
+    },
+    address: {
+      street: { type: String, required: true },
+      number: { type: Number, required: true },
+      zip: { type: Number, required: true },
+      city: { type: String, required: true },
+      country: { type: String, required: true }
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    website: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
