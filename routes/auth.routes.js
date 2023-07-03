@@ -19,7 +19,7 @@ const saltRounds = 10;
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
   const { email, password, name } = req.body;
-
+   console.log('FROM SIGNUP', req.body)
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "") {
     res.status(400).json({ message: "Provide email, password and name" });
@@ -64,12 +64,14 @@ router.post("/signup", (req, res, next) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
       const { email, name, _id } = createdUser;
-
-      // Create a new object that doesn't expose the password
-      const user = { email, name, _id };
-
+      const payload = { _id, email, name };
+      const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+        algorithm: "HS256",
+        expiresIn: "6h",
+      });
+      
       // Send a json response containing the user object
-      res.status(201).json({ user: user });
+      res.status(201).json({ authToken, user: { _id, email, name } });
     })
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
