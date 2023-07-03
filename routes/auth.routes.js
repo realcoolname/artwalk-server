@@ -126,6 +126,14 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 
   // Send back the token payload object containing the user data
   res.status(200).json(req.payload);
+
+});
+
+router.post("/logout", isAuthenticated, (req,res, next) => {
+  res.clearCookie("token");
+
+  // Send a response indicating successful logout
+  res.status(200).json({ message: "Logout successful" });
 });
 
 module.exports = router;
