@@ -14,7 +14,7 @@ const Event = require("../models/Event.model");
 
 //  POST /api/events  -  Creates a new event
 router.post("/events", (req, res, next) => {
-  const { image, name, curator, venueId, date, discipline, description } =
+  const { image, name, curator, venue, date, discipline, description } =
     req.body;
 
   const newEvent = {
@@ -22,7 +22,7 @@ router.post("/events", (req, res, next) => {
     image: image,
     name: name,
     curator: curator,
-    venue: venueId,
+    venue: venue,
     date: date,
     discipline: discipline,
     description: description,
@@ -42,6 +42,7 @@ router.post("/events", (req, res, next) => {
 // GET // Display all the events
 router.get("/events", (req, res, next) => {
   Event.find()
+    .populate("venue")
     .then((response) => {
       res.status(200).json(response);
     })
@@ -66,6 +67,7 @@ router.get("/events/:eventId", (req, res, next) => {
   }
 
   Event.findById(eventId)
+  .populate("venue")
     .then((event) => res.json(event))
     .catch((err) => {
       console.log("error getting details of a event", err);
