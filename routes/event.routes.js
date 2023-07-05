@@ -1,3 +1,5 @@
+const { isAuthenticated } = require("../middleware/jwt.middleware")
+
 const express = require("express");
 const router = express.Router();
 
@@ -13,7 +15,7 @@ const Venue = require("../models/Venue.model");
 const Event = require("../models/Event.model");
 
 //  POST /api/events  -  Creates a new event
-router.post("/events", (req, res, next) => {
+router.post("/events", isAuthenticated, (req, res, next) => {
   const { image, name, curator, venue, date, discipline, description } =
     req.body;
 
@@ -26,6 +28,7 @@ router.post("/events", (req, res, next) => {
     date: date,
     discipline: discipline,
     description: description,
+    owner: req.payload._id
   };
 
   Event.create(newEvent)
