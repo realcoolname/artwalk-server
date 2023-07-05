@@ -48,7 +48,7 @@ router.post("/signup", (req, res, next) => {
     .then((foundUser) => {
       // If the user with the same email already exists, send an error response
       if (foundUser) {
-        res.status(400).json({ message: "User already exists." });
+        res.status(400).json({ message: "User already exists. Please log in." });
         return;
       }
 
@@ -91,7 +91,7 @@ router.post("/login", (req, res, next) => {
     .then((foundUser) => {
       if (!foundUser) {
         // If the user is not found, send an error response
-        res.status(401).json({ message: "User not found." });
+        res.status(401).json({ message: "User not found. Please sign up." });
         return;
       }
 
