@@ -2,8 +2,12 @@ const { isAuthenticated } = require("../middleware/jwt.middleware")
 
 const express = require("express");
 const router = express.Router();
+const cloudinary = require('cloudinary').v2;
+
 
 const { default: mongoose } = require("mongoose");
+
+
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
@@ -16,12 +20,12 @@ const Event = require("../models/Event.model");
 
 //  POST /api/events  -  Creates a new event
 router.post("/events", isAuthenticated, (req, res, next) => {
-  const { image, name, curator, venue, date, discipline, description } =
+  const { imageUrl, name, curator, venue, date, discipline, description } =
     req.body;
 
   const newEvent = {
     //image(comes from model): image(comes from the object above- name of the variable)
-    image: image,
+    imageUrl: imageUrl,
     name: name,
     curator: curator,
     venue: venue,
@@ -41,6 +45,8 @@ router.post("/events", isAuthenticated, (req, res, next) => {
       });
     });
 });
+
+
 
 // GET // Display all the events
 router.get("/events", (req, res, next) => {

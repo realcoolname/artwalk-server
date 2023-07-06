@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { default: mongoose } = require("mongoose");
 
+
+
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
@@ -27,16 +29,19 @@ router.get('/venues', (req, res, next) => {
         })
 });
 
+
+
+
 //  POST /api/venues  -  Creates a new venue
 router.post("/venues", (req, res, next) => {
-  const { image, name, address, description, website } = req.body;
+  const { imageUrl, name, address, description, website } = req.body;
 
   const newVenue = {
-    image: image,
     name: name,
     address: address,
     description: description,
     website: website,
+    imageUrl: imageUrl
   };
 
   Venue.create(newVenue)

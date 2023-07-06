@@ -3,8 +3,9 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
   {
-    image: {
+    imageUrl: {
       type: String,
+      required: true,
     },
     name: {
       type: String,

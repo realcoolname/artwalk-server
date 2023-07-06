@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const cloudinary = require('cloudinary').v2;
+
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
